@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <title>LOGIN OR REGISTER</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="login_registration.css">
+        <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <style>
+            body{
+    background-image: url("https://cdn.pixabay.com/photo/2018/06/17/10/38/artist-3480274__340.jpg");
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.header{
+    margin-top:150px;
+    text-align: center; 
+    color:black;
+    border: 2px solid #000000;
+}
+.wrapper{
+    text-align:center;
+}
+#btn2{
+    padding: 15px 75px;
+    margin-top: 15px;
+    background-color:rgba(245, 244, 244, 0);
+    color:darkgrey;
+    font-family: 'Merriweather', serif;
+    font-size: 20px;
+    border:2px solid #000000;
+    border-radius: 4px;
+    
+}
+#btn1{
+    padding: 15px 75px;
+    margin-top: 15px;
+    background-color:rgba(245,244,244,0);
+    color:darkgrey;
+    font-family: 'Merriweather', serif;
+    border:2px solid #000000;
+    font-size:20px;
+    border-radius: 4px;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+#btn3{
+    padding: 15px 75px;
+    margin-top: 15px;
+    background-color: rgba(245,244,244,0);
+    color:black;
+    font-family: 'Merriweather', serif;
+    border-radius: 4px;
+    border:2px solid  #000000;
+    font-size:20px;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+#btn1:hover,#btn2:hover,#btn3:hover{
+    background-color: rgba(5, 5, 5, 0.5)
+}
+
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        <div class="Header">
+            <h1><strong>REGISTER ON OUR WEBSITE</strong></h1>
+            <h1><strong>AND START COLLOBORATING YOUR PASSION FOR MUSIC</strong></h1>
+        </div>
+            <div class="wrapper">
+                <a href="/loginUser"><button type="button" class="btn btn-primary" id="btn1"><strong>LOGIN AS USER</strong> </button></a>
+                <br/>
+                <a href="/loginEvent"><button type="button" class="btn btn-primary" id="btn1"><strong>LOGIN AS EVENT ORGANISER</strong> </button></a>
+                <br/>
+                <a href="/regUser"><button class="btn btn-success" id="btn2"><strong>REGISTER AS MEMBER</strong> </button></a>
+                <br/>
+                <a href="/regEvent"><button type="button" class="btn btn-info" id="btn3"><strong>REGISTER AS EVENT ORGANISER</strong></button></a>
+                <br/>
+                
+            </div>
+        </div>
+    </body>
+
+</html>

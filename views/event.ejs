@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <style>
+  
+  
+  .uname{
+    margin-bottom:25px;
+    margin-top: -25px;
+  }
+  .jumbotron{
+    margin-left:-16px;
+    height:383px;
+    width:537px;
+  }
+  
+  </style>
+  <script>
+
+  function displayProfile(name){
+    axios.get('http://localhost:3020/eventprof')
+    .then(function (response) {
+      // handle success
+      // clearData();
+      display(response,name);
+     
+      displayProfileeve(name)
+      
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+
+    }
+
+
+  function getchat(loguser)
+  {
+    link='http://localhost:3020/chat/'+loguser
+    console.log(link)
+    location.href=link
+  }
+
+    function displayProfileeve(name){
+    axios.get('http://localhost:3020/newEvent')
+    .then(function (response) {
+      // handle success
+      // clearData();
+      displaymyevents(response,name);
+     
+     
+      
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+
+    }
+
+    function displaymyevents(response,name){
+     length=response.data.length;
+      for(var i=0;i<length;i++){
+        if(response.data[i].userName===name){
+          console.log("this is user"+response.data[i].userName)
+          document.getElementById("events").innerHTML+=
+       
+       `
+       <div class="jumbotron">
+  
+  <p class="lead">EventName : ${response.data[i].eventName}</p>
+  <p class="lead">GENRE:${response.data[i].eventLocation}</p>
+  <hr class="my-2">
+  <p>EMAIL:${response.data[i].eventType}.</p>
+  <p>MOBILE NO:${response.data[i].Salary}
+  <p>CITY:${response.data[i].Contact}</p>
+  <p>
+ 
+
+</div>
+`
+   
+    
+        }}}
+    
+
+  function display(response,name){
+     length=response.data.length;
+      for(var i=0;i<length;i++){
+        if(response.data[i].userName===name){
+          console.log("this is user"+response.data[i].userName)
+          document.getElementById("data").innerHTML+=
+       
+       `
+       <div class="jumbotron">
+  <h1 class="display-3">Hello,${response.data[i].userName}!</h1>
+ 
+  <hr class="my-2">
+  <p>EMAIL:${response.data[i].email}.</p>
+  <p>MOBILE NO:${response.data[i].phoneNumber}
+  <p>CITY:${response.data[i].city}</p>
+  <p>
+ 
+
+</div>
+`
+        }
+      }
+
+    }
+
+    function clearData(){
+      //document.getElementById('userlinks').innerHTML=""
+      document.getElementById("data").innerHTML=""
+    }
+    function clearProfiledata(){
+      document.getElementById('userlinks').innerHTML=""
+    }
+//     function addProfiledata(){
+//       document.getElementById('userlinks').innerHTML=`
+//       <div id='userbio' class="shadow-lg p-3 mb-5 bg-white rounded">
+//   <h2 style="margin-bottom: 5px">DESCRIPTION</h2>
+//   <br>
+// </div>
+// <input id="bio" type="text"></input><button onclick=${function(){addbio()}}>ADD to BIO</button>
+
+
+// <input id="audio" type="text"></input><button onclick=${function(){sendAudio()}}>send audio</button>
+// <p id='soundcloud'></p>
+
+
+// <div>Enter a YouTube URL:
+//   <input id="video" type="text"  />
+// </div>
+// <div>
+//   <button id="myBtn" onclick=${function(){sendVideo()}}>Go</button>
+// </div>
+// <p id="frame"></p>`
+//     }
+    function displayData(response)
+    {   length=response.data.length;
+      for(var i=0;i<length;i++){
+        
+      
+      // document.getElementById("username").innerHTML = response.data[i].username;
+      // document.getElementById("instrument").innerHTML = response.data[i].instrument;
+      // document.getElementById("email").innerHTML = response.data[i].email;
+      // document.getElementById("city").innerHTML = response.data[i].city;
+      // document.getElementById("genre").innerHTML = response.data[i].genre;
+      // document.getElementById("level").innerHTML = response.data[i].level;
+     
+  document.getElementById("data").innerHTML+=
+       
+       `
+       <div class="card-deck" style="width:25% ;float:left;margin-right:0px;margin-bottom:30px ">
+      <div class="card" >
+    <img class="card-img-top" src="https://www.kickassfacts.com/wp-content/uploads/2014/06/Bands.jpg"  style="width:100%">
+      <h4 class="card-title">${response.data[i].userName}</h4>
+      <p class="card-text">Instrument:${response.data[i].instrument}</p>
+      <p class="card-text">Genre:${response.data[i].genre}</p>
+      <p class="card-text">Level:${response.data[i].level}</p>
+    
+      
+      
+      <a class="btn btn-primary stretched-link" onclick=>See Profile</a>
+    </div>
+  </div>
+</div>
+</div>
+  
+      `
+      // let btn=document.getElementsByClassName('btn btn-primary stretched-link')[i];
+      //   btn.addEventListener('click',()=>{displayProfile(response.data[i].userName)})
+      // var data=document.createElement(a);
+      // node.appendChild(data);
+      // document.getElementById("data0").appendChild(node)
+     // console.log(userName);
+    
+    }}
+    function trial(name){
+      console.log(name)
+    }
+    function displayEventData(response)
+    {length=response.data.length;
+      for(var i=0;i<length;i++){
+      
+      // document.getElementById("username").innerHTML = response.data[i].username;
+      // document.getElementById("instrument").innerHTML = response.data[i].instrument;
+      // document.getElementById("email").innerHTML = response.data[i].email;
+      // document.getElementById("city").innerHTML = response.data[i].city;
+      // document.getElementById("genre").innerHTML = response.data[i].genre;
+      // document.getElementById("level").innerHTML = response.data[i].level;
+     
+       document.getElementById("data").innerHTML+=`
+       <div class="card-deck" style="width:25% ;float:left;margin-right:0px;margin-bottom:30px ">
+      <div class="card" >
+    <img class="card-img-top" src="https://musicoomph.com/wp-content/uploads/2018/03/benefits-of-going-to-live-music-concerts.jpg" style="width:100%">
+      <h4 class="card-title" style="margin-bottom:5px">${response.data[i].eventName}</h4>
+      <p class="card-text">Location:${response.data[i].eventPlace}</p>
+      <p class="card-text">CITY:${response.data[i].eventLocation}</p>
+      <p class="card-text">Contact:${response.data[i].Contact}</p>
+      <p class="card-text">EventType:${response.data[i].eventType}</p>
+      <p class="card-text">Salary:${response.data[i].Salary}</p>
+      <p class="card-text">Status:${response.data[i].Status}</p>
+    
+      
+      
+    </div>
+  </div>
+</div>
+</div>`
+      //  <div class="container-fluid" style="border:5px solid black ">
+      //  <div class="row">
+      //     <div class="col-sm-6" id="username"+ style="background-color:yellow;">${response.data[i].eventName}</div>
+      //     <div class="col-sm-6" id="instrument"style="background-color:orange;">Place:${response.data[i].eventPlace}</div>
+      //   </div>
+      //   <br>
+        
+      //   <div class="row">
+      //     <div class="col-sm" id="email" style="background-color:yellow;">Location:${response.data[i].eventLocation}</div>
+   
+      //     <div class="col-sm" id="email" style="background-color:yellow;">contact:${response.data[i].Contact}</div>
+   
+      //   </div>
+      //   <br>
+      //   <div class="row">
+      //     <div class="col-sm" id="city" style="background-color:yellow;">Type:${response.data[i].eventType}</div>
+      //     <div class="col-sm" id="genre" style="background-color:orange;">worth:${response.data[i].Salary}</div>
+      //     <div class="col-sm" id="level" style="background-color:orange;">Status:${response.data[i].Status}</div>
+         
+      //   </div>
+      //   <br>
+     
+      //   </div>
+      
+}}
+  
+    function getguitar()
+    {
+      axios.get('http://localhost:3020/guitar')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      displayData(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+  
+    
+    function getdrum()
+    {
+  axios.get('http://localhost:3020/drum')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      displayData(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+    function getbass()
+    {
+  axios.get('http://localhost:3020/bass')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      displayData(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+    function getvocals()
+    {
+  axios.get('http://localhost:3020/vocals')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      displayData(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+    function getkeyboard()
+    {
+  axios.get('http://localhost:3020/keyboard')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      displayData(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+    function getevent()
+    {
+      axios.get('http://localhost:3020/event')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      displayEventData(response);
+      console.log(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  }
+  function displayMain(loguser)
+  {
+    link='http://localhost:3020/main/event/'+loguser
+    console.log(link)
+    location.href=link
+    // axios.get('http://localhost:3020/main/'+loguser)
+    // .then(function (response) {
+    //   // handle success
+    //   //  clearData();
+    //   // clearProfiledata()
+    //   // displayEventData(response);
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   // handle error
+    //   console.log(error);
+    // })
+    // .finally(function () {
+    //   // always executed
+    // });
+
+
+
+
+  }</script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#" onclick=displayMain(loguser)>INDIKA
+  </a>
+
+  <!-- Links -->
+  <ul class="navbar-nav">
+    
+    </li>
+
+    <!-- Dropdown -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        INSTRUMENTS
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#" onclick=getguitar()>GUITARISTS</a>
+        <a class="dropdown-item" href="#" onclick=getdrum()>DRUMMER</a>
+        <a class="dropdown-item" href="#" onclick=getbass()>BASS</a>
+        <a class="dropdown-item" href="#" onclick=getvocals()>VOCALS</a>
+        <a class="dropdown-item" href="#" onclick=getkeyboard()>KEYBOARDS</a>
+      </div>
+    </li>
+  </ul>
+  <li class="nav-item">
+    <a class="nav-link" onclick=getevent() >EVENTS</a>
+   
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" onclick="getchat(loguser)"  >CHAT</a>
+  </li>
+</nav>
+<br>
+<h1 class="uname" id="user" hidden><%=logusername%></h1>
+<div class="container-fluid" id="data">  
+</div> 
+<div id='userlinks'>
+
+    <h class="top-wrapper"><strong>My Events</strong></h>
+        <hr>
+      <p id="events"></p>
+
+
+    <a class="btn btn-primary" target="_blank" href="/newEvent/eventForm" >ADD an Event</a>
+
+
+
+<script>
+
+var loguser=document.getElementById('user').innerText;
+window.onload=function(){
+displayProfile(loguser)
+// displayAudio(loguser)
+// displayVideo(loguser)
+// displayBio(loguser)
+}
+
+        
+
+
+   </script>
+
+</body>
+</html>

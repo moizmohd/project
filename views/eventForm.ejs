@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+<title>Event Form</title>
+<link href="https://htmlcolors.com/google-color-picker">
+        <style>
+            body{
+    background-image: url("https://static.vecteezy.com/system/resources/previews/000/115/312/non_2x/free-music-background-vector.jpg");
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+input{
+    margin: 12px 340px;
+    width:309px;
+    height: 30px;
+    background-color:rgba(14, 4, 4, 0.5);
+    color:rgba(255,255,255)
+}
+input[type=submit] {
+    background-color:white;
+    color: rgba(12, 12, 12, 0.856);
+    padding-top:25px;
+    padding-bottom: 34px;
+    border: 3px solid #555;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  input:focus {
+    border: 3px solid #555;
+  }
+  h1{
+      border:3px solid #000000;
+      display: inline-block;
+  }
+        </style>
+        <script>
+
+        function myfunction(){
+            document.getElementById('my-form').submit();
+
+            document.getElementById('my-form').reset();
+        }
+        </script>
+
+    </head>
+   <body><div class="container" >
+     <div class="registration-form" >
+        <div class="left-form" style="padding-left: 175px;">
+            <h1 style="margin-left: 272px">
+                Fill The Event Details
+            </h1>
+            <form id='my-form'action="http://localhost:3020/event" method="POST" >
+                <input type="text" name="userName" placeholder=" Enter the username " required="true"> 
+
+                <input type="text" name="eventName" placeholder="Enter Your Eventname" required="true" >
+                <br/>
+                <input type="text" name="eventLocation" placeholder=" Enter the event Location " required="true"> 
+                <br/>
+                <input type="text" name="eventType" required="true" placeholder="Enter the Eventtype"> 
+                <br/>
+                <input type="number" name="Salary" required="true" placeholder="Enter the Salary"> 
+                <br/> 
+                <input type="text" name="Status" required="true" placeholder="Enter the Status">  
+                <br/>
+                <input type="number" name="Contact" required="true" placeholder="Contact"> 
+                <br/>
+                 <br/> 
+                <input style='margin-block: 72px;'type="button" value="SUBMIT" onclick="myfunction()" > 
+            </form>
+            <% if (locals.messages) { %>
+                <div><%=messages%></div>
+            <% } %>
+            
+            </div>
+        </div>    
+   </div> 
+ </body>
+
+
+</html>

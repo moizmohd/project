@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    let x;
+  function displayProfile(name){
+    axios.get('http://localhost:3020/profile')
+    .then(function (response) {
+      // handle success
+      clearData();
+      display(response,name);
+      // addProfiledata();
+      displayAudio(name)
+      displayVideo(name)
+      displayBio(name)
+
+      
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+
+    }
+    function displayAudio(name){
+      axios.get('http://localhost:3020/profile/audio')
+    .then(function (response) {
+      // handle success
+      displayWidget(response,name);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+    }
+    function displayWidget(response,name){
+      length=response.data.length;
+      console.log("length is"+length);
+
+      for(var i=0;i<length;i++){
+        if(response.data[i].userName===name){
+          console.log("sound cloud links---"+response.data[i].userName)
+          url=response.data[i].audioLink;
+          axios.get('http://soundcloud.com/oembed?format=json&url='+url+'&iframe=true')
+    .then(function (response) {
+      // handle success
+    var widget=response.data.html
+    widget=widget.replace("width=\"100%\"","width=\"70%\"");
+    widget=widget.replace("height=\"400\"","height=\"70%\"");
+    document.getElementById('soundcloud').innerHTML+=widget
+     console.log(widget)
+     
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+
+
+  }}
+
+    }
+    function displayBio(name){
+      axios.get('http://localhost:3020/profile/bio')
+    .then(function (response) {
+      // handle success
+      displayUserbio(response,name);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+}
+function displayUserbio(response,name){
+  length=response.data.length;
+      for(var i=0;i<length;i++){
+        if(response.data[i].userName===name){
+          console.log("this is userbio"+response.data[i].bio)
+
+document.getElementById('userbio').innerHTML+=`<p>${response.data[i].bio}</p>`
+
+
+}}}
+    function displayVideo(name){
+      axios.get('http://localhost:3020/profile/video')
+    .then(function (response) {
+      // handle success
+      displayYoutube(response,name);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+    }
+
+    function displayYoutube(response,name){
+      length=response.data.length;
+      for(var i=0;i<length;i++){
+        if(response.data[i].userName===name){
+         console.log("inside display YT"+input_string)
+            var input_string = response.data[i].videoLink;
+            console.log(input_string)
+            var right_text = input_string.substring(input_string.indexOf("=")+1);
+            console.log("YT ID"+right_text)
+            document.getElementById('frame').innerHTML+=` <iframe width="560" height="315" src="https://www.youtube.com/embed/${right_text}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+`}}}
+
+
+
+
+
+  function display(response,name){
+     length=response.data.length;
+      for(var i=0;i<length;i++){
+        if(response.data[i].userName===name){
+          console.log("this is user"+response.data[i].userName)
+          document.getElementById("data").innerHTML+=
+       
+       `
+       <div class="jumbotron">
+  <h1 class="display-3">Hello,${response.data[i].userName}!</h1>
+  <p class="lead">INSTRUMENT : ${response.data[i].instrument}</p>
+  <p class="lead">GENRE:${response.data[i].genre}</p>
+  <hr class="my-2">
+  <p>EMAIL:${response.data[i].email}.</p>
+  <p>MOBILE NO:${response.data[i].phoneNumber}
+  <p>CITY:${response.data[i].city}</p>
+  <p>
+ 
+
+</div>
+`
+        }
+      }
+
+    }
+
+    function clearData(){
+     //document.getElementById('userlinks').innerHTML=""
+      document.getElementById("data").innerHTML=""
+    }
+    function clearProfiledata(){
+      document.getElementById('userlinks').innerHTML=""
+    }
+//     function addProfiledata(){
+//       document.getElementById('userlinks').innerHTML=`
+//       <div id='userbio' class="shadow-lg p-3 mb-5 bg-white rounded">
+//   <h2 style="margin-bottom: 5px">DESCRIPTION</h2>
+//   <br>
+// </div>
+// // <input id="bio" type="text"></input><button onclick=${addEventListener("click",function(){addbio()})}>ADD to BIO</button>
+
+
+// // <input id="audio" type="text"></input><button onclick=${addEventListener("click",function(){sendAudio()})}>send audio</button>
+// <p id='soundcloud'></p>
+
+
+// <div>Enter a YouTube URL:
+//   <input id="video" type="text"  />
+// </div>
+// <div>
+//   // <button id="myBtn" onclick=${addEventListener("click",function(){sendVideo()})}>Go</button>
+// </div>
+// <p id="frame"></p>`
+//     }
+    function displayData(response,ins)
+    {   length=response.data.length;
+        if(ins==='guitar')
+        {link='https://cdn.shopify.com/s/files/1/1010/2722/products/andrew_healey_2.jpg?v=1455751289'}
+        if(ins==='drums')
+        {link='https://cdn.shopify.com/s/files/1/1179/7372/files/Thomo.jpg?v=1511848381'}
+        if(ins==='bass')
+        {link='https://mitchellguitars.com/wp-content/uploads/2018/11/Mitchell-FB-Series-Bass-Main-Mobile.jpg'}
+        if(ins==='vocals')
+        {link='https://i.udemycdn.com/course/750x422/113564_a628_8.jpg'}
+        if(ins==='keyboard')
+        {link='https://digitalpianojudge.com/wp-content/uploads/2019/02/cheap-keyboard-piano.jpg'}
+      for(var i=0;i<length;i++){
+     
+     
+  document.getElementById("data").innerHTML+=
+       
+       `
+       <div class="card-deck" style="width:25% ;float:left;margin-right:0px;margin-bottom:30px ">
+      <div class="card" >
+    <img class="card-img-top" src=${link}  style="width:100%">
+      <h4 class="card-title">${response.data[i].userName}</h4>
+      <p class="card-text">Instrument:${response.data[i].instrument}</p>
+      <p class="card-text">Genre:${response.data[i].genre}</p>
+      <p class="card-text">Level:${response.data[i].level}</p>
+    
+      
+      
+      <a href='/others/${response.data[i].userName}' target="_blank" class="btn btn-primary stretched-link" id =${i} >See Profile</a>
+    </div>
+  </div>
+</div>
+</div>
+  
+      `
+      // let btn=document.getElementsByClassName('btn btn-primary stretched-link')[i];
+      //   btn.addEventListener('click',()=>{displayProfile(response.data[i].userName)})
+      // var data=document.createElement(a);
+      // node.appendChild(data);
+      // document.getElementById("data0").appendChild(node)
+     // console.log(userName);
+    
+    }}
+    function trial(name){
+      console.log(name)
+    }
+    function displayEventData(response)
+    {length=response.data.length;
+
+  
+      for(var i=0;i<length;i++){
+         //chatevents[i]=response.data[i].eventName;
+         
+      
+      // document.getElementById("username").innerHTML = response.data[i].username;
+      // document.getElementById("instrument").innerHTML = response.data[i].instrument;
+      // document.getElementById("email").innerHTML = response.data[i].email;
+      // document.getElementById("city").innerHTML = response.data[i].city;
+      // document.getElementById("genre").innerHTML = response.data[i].genre;
+      // document.getElementById("level").innerHTML = response.data[i].level;
+     
+       document.getElementById("data").innerHTML+=` 
+       <div class="card-deck" style="width:25% ;float:left;margin-right:0px;margin-bottom:30px ">
+      <div class="card" >
+    <img class="card-img-top" src="https://musicoomph.com/wp-content/uploads/2018/03/benefits-of-going-to-live-music-concerts.jpg" style="width:100%">
+      <h4 id="card-title${i}" style="margin-bottom:5px">${response.data[i].eventName}</h4>
+      <p class="card-text">Location:${response.data[i].eventPlace}</p>
+      <p class="card-text">CITY:${response.data[i].eventLocation}</p>
+      <p class="card-text">Contact:${response.data[i].Contact}</p>
+      <p class="card-text">EventType:${response.data[i].eventType}</p>
+      <p class="card-text">Salary:${response.data[i].Salary}</p>
+      <p class="card-text">Status:${response.data[i].Status}</p>
+       
+       
+
+  
+      
+      
+    </div>
+  </div>
+</div>
+</div>
+       
+       
+       
+       `
+
+
+
+       
+      //  <div class="container-fluid" style="border:5px solid black ">
+      //  <div class="row">
+      //     <div class="col-sm-6" id="username"+ style="background-color:yellow;">${response.data[i].eventName}</div>
+      //     <div class="col-sm-6" id="instrument"style="background-color:orange;">Place:${response.data[i].eventPlace}</div>
+      //   </div>
+      //   <br>
+        
+      //   <div class="row">
+      //     <div class="col-sm" id="email" style="background-color:yellow;">Location:${response.data[i].eventLocation}</div>
+   
+      //     <div class="col-sm" id="email" style="background-color:yellow;">contact:${response.data[i].Contact}</div>
+   
+      //   </div>
+      //   <br>
+      //   <div class="row">
+      //     <div class="col-sm" id="city" style="background-color:yellow;">Type:${response.data[i].eventType}</div>
+      //     <div class="col-sm" id="genre" style="background-color:orange;">worth:${response.data[i].Salary}</div>
+      //     <div class="col-sm" id="level" style="background-color:orange;">Status:${response.data[i].Status}</div>
+         
+      //   </div>
+      //   <br>
+     
+      //   </div>
+      
+}}
+  
+    function getguitar()
+    {
+      var ins='guitar'
+      axios.get('http://localhost:3020/guitar')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+     //
+      displayData(response,ins);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+  
+    
+    function getdrum()
+    {
+  axios.get('http://localhost:3020/drum')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      ins='drums'
+      displayData(response,ins);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+    function getbass()
+    {
+  axios.get('http://localhost:3020/bass')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      ins='bass'
+      displayData(response,ins);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+    function getvocals()
+    {
+  axios.get('http://localhost:3020/vocals')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      ins='vocals'
+      displayData(response,ins);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+    function getkeyboard()
+    {
+  axios.get('http://localhost:3020/keyboard')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      ins='keyboard'
+      displayData(response,ins);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+    
+
+
+
+    function getevent()
+    {
+      axios.get('http://localhost:3020/event')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      displayEventData(response);
+      console.log(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  }
+
+  function getchat(loguser)
+  {
+    link='http://localhost:3020/chat/'+loguser
+    console.log(link)
+    location.href=link
+  }
+  function displayMain(loguser)
+  {
+    link='http://localhost:3020/main/'+loguser
+    console.log(link)
+    location.href=link
+    // axios.get('http://localhost:3020/main/'+loguser)
+    // .then(function (response) {
+    //   // handle success
+    //   //  clearData();
+    //   // clearProfiledata()
+    //   // displayEventData(response);
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   // handle error
+    //   console.log(error);
+    // })
+    // .finally(function () {
+    //   // always executed
+    // });
+
+
+
+
+  }</script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand -->
+  <!-- <script>main='http://localhost:3020/main/'+loguser</script> -->
+  <a class="navbar-brand" onclick=displayMain(loguser)>INDIKA
+  </a>
+
+  <!-- Links -->
+  <ul class="navbar-nav">
+    
+    </li>
+
+    <!-- Dropdown -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        INSTRUMENTS
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#" onclick=getguitar()>GUITARISTS</a>
+        <a class="dropdown-item" href="#" onclick=getdrum()>DRUMMER</a>
+        <a class="dropdown-item" href="#" onclick=getbass()>BASS</a>
+        <a class="dropdown-item" href="#" onclick=getvocals()>VOCALS</a>
+        <a class="dropdown-item" href="#" onclick=getkeyboard()>KEYBOARDS</a>
+      </div>
+    </li>
+  </ul>
+  <li class="nav-item">
+    <a class="nav-link" onclick=getevent() >EVENTS</a>
+    
+  </li>
+  <li class="nav-item">
+  <a class="nav-link" onclick="getchat(loguser)" >CHAT</a>
+</li>
+</nav>
+<br>
+<h1 id="user" hidden><%=logusername%></h1>
+<div class="container-fluid" id="data">  
+</div> 
+<div id='userlinks'>
+<div id='userbio' class="shadow-lg p-3 mb-5 bg-white rounded">
+  <h2 style="margin-bottom: 5px">DESCRIPTION</h2>
+  <br>
+</div>
+<input id="bio" type="text"></input><button onclick=addbio()>ADD to BIO</button>
+
+
+<input id="audio" type="text"></input><button onclick=sendAudio()>send audio</button>
+<p id='soundcloud'></p>
+
+
+<div>Enter a YouTube URL:
+  <input id="video" type="text"  />
+</div>
+<div>
+  <button id="myBtn" onclick=sendVideo()>Go</button>
+</div>
+<p id="frame"></p>
+
+
+
+</div>
+
+
+<script>
+var loguser=document.getElementById('user').innerText;
+window.onload=function(){
+displayProfile(loguser)
+// displayAudio(loguser)
+// displayVideo(loguser)
+// displayBio(loguser)
+}
+function sendAudio(){
+  audioLink=document.getElementById('audio').value;
+  console.log(audioLink);
+  console.log(loguser);
+  axios.post('/profile', {
+    userName: loguser,
+    audioLink: audioLink
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+function sendVideo(){
+  videoLink=document.getElementById('video').value;
+  console.log(videoLink);
+  console.log(loguser);
+  axios.post('/profile/video', {
+    userName: loguser,
+    videoLink: videoLink
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+function addbio(){
+  bio=document.getElementById('bio').value;
+  axios.post('/profile/bio', {
+    userName: loguser,
+    bio: bio
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+
+   </script>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+<title>Event Organaiser Registration</title>
+<link href="https://htmlcolors.com/google-color-picker">
+
+<style>
+
+body{
+    background-image: url("");
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+input{
+    margin: 12px 340px;
+    width:309px;
+    height: 30px;
+    background-color:rgba(14, 4, 4, 0.5);
+    color:rgba(255,255,255)
+}
+input[type=submit] {
+    background-color:white;
+    color: rgba(12, 12, 12, 0.856);
+    padding-top:25px;
+    padding-bottom: 34px;
+    border: 3px solid #555;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  input:focus {
+    border: 3px solid #555;
+  }
+  h1{
+      border:3px solid #000000;
+      display: inline-block;
+  }
+</style>
+
+    </head>
+    <script>
+
+            function myfunction(){
+                document.getElementById('my-form').submit();
+    
+                document.getElementById('my-form').reset();
+            }
+            </script>
+    
+    
+<body><div class="container" >
+        <div class="registration-form" >
+           <div class="left-form" style="padding-left: 175px;">
+               <h1 style="margin-left: 155px">
+                   REGISTER AS AN EVENT ORGANAISER
+               </h1>
+               <form id='my-form'action="http://localhost:3020/eventOrgs" method="POST" >
+                   <input type="text" name="userName" placeholder="Enter Your Username" required="true" >
+                   <br/>
+                   <input type="email" name="email" placeholder=" Enter Your Email" required="true"> 
+                   <br/>
+                   <input type="password" name="password" required="true" placeholder="Enter Your Password"> 
+                   <br/>
+                   <input type="number" name="phoneNumber" required="true" placeholder="Enter Phone Number"> 
+                   <br/> 
+                   <input type="text" name="city" required="true" placeholder="Enter Your City">  
+                   <br/>
+                   <br/>
+                  
+                   <input style='margin-block: 72px;'type="button" value="SUBMIT" onclick="myfunction()" > 
+               </form>
+               <% if (locals.messages) { %>
+                   <div><%=messages%></div>
+               <% } %>
+               
+               </div>
+           </div>    
+      </div> 
+   <!-- <body><div class="container" >
+
+   
+     <div class="registration-form" style="width:50%;float: left;height:550px;background-color:#264040;" >
+        <div class="left-form" style="padding-left: 175px;">
+            <h1>
+                Registration
+            </h1>
+          <form action="http://localhost:3020/eventOrgs" method="POST" >
+                <p>UserName   :<input type="text" name="userName">  </p>
+                <p>Email      :<input type="email" name="email">  </p>
+                <p>Password   :<input type="password" name="password">  </p>
+                <p>Mobile     :<input type="number" name="phoneNumber">  </p>
+                <p>City       :<input type="text" name="city">  </p>
+               
+                 <input type="submit" value="Submit"> 
+
+
+
+
+                 </form>
+
+                 <% if (locals.messages) { %>
+                    <div><%=messages%></div>
+                <% } %>
+                </div>
+
+            </div>    
+   </div>  -->
+ </body>
+
+
+</html>

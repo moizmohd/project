@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+<title>User Registration</title>
+<link href="https://htmlcolors.com/google-color-picker">
+        <style>
+            body{
+    background-image: url("https://static.vecteezy.com/system/resources/previews/000/115/312/non_2x/free-music-background-vector.jpg");
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+input{
+    margin: 12px 340px;
+    width:309px;
+    height: 30px;
+    background-color:rgba(14, 4, 4, 0.5);
+    color:rgba(255,255,255)
+}
+input[type=submit] {
+    background-color:white;
+    color: rgba(12, 12, 12, 0.856);
+    padding-top:25px;
+    padding-bottom: 34px;
+    border: 3px solid #555;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  input:focus {
+    border: 3px solid #555;
+  }
+  h1{
+      border:3px solid #000000;
+      display: inline-block;
+  }
+        </style>
+        <script>
+
+        function myfunction(){
+            document.getElementById('my-form').submit();
+
+            document.getElementById('my-form').reset();
+        }
+        </script>
+
+    </head>
+   <body><div class="container" >
+     <div class="registration-form" >
+        <div class="left-form" style="padding-left: 175px;">
+            <h1 style="margin-left: 272px">
+                REGISTER AS A NEW USER
+            </h1>
+            <form id='my-form'action="http://localhost:3020/users" method="POST" >
+                <input type="text" name="userName" placeholder="Enter Your Username" required="true" >
+                <br/>
+                <input type="email" name="email" placeholder=" Enter Your Email" required="true"> 
+                <br/>
+                <input type="password" name="password" required="true" placeholder="Enter Your Password"> 
+                <br/>
+                <input type="number" name="phoneNumber" required="true" placeholder="Enter Phone Number"> 
+                <br/> 
+                <input type="text" name="city" required="true" placeholder="Enter Your City">  
+                <br/>
+                <input type="text" name="genre" required="true" placeholder="Genre"> 
+                <br/>
+                <select style="position: absolute;left: 523px;width: 314px;"name="instrument">
+                        <option value="" disabled selected>Select your option</option>
+                        <option value="guitar">Guitar</option>
+                        <option value="bass">Bass</option>
+                        <option value="keyboard">Keyboard</option>
+                        <option value="drum">Drums</option>
+                        <option value="vocals">Vocals</option>
+                        
+                    </select>               
+                    <br/>
+                      <select style="position: absolute;left: 523px;width: 314px; margin-block: 43px;;" name="level">
+                            <option value="" disabled selected>Select your option</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advance">Advanced</option>
+                          </select>                 <br/> 
+                <input style='margin-block: 72px;'type="button" value="SUBMIT" onclick="myfunction()" > 
+            </form>
+            <% if (locals.messages) { %>
+                <div><%=messages%></div>
+            <% } %>
+            
+            </div>
+        </div>    
+   </div> 
+ </body>
+
+
+</html>

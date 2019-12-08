@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet"> 
+      <link href="https://fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps&display=swap" rel="stylesheet"> 
+
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Group Chat </title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font: 13px Helvetica, Arial; }
+        form { background: #fff; padding: 3px; position: fixed; bottom: 0; width: 100%; border-color: #000; border-top-style: solid; border-top-width: 1px;}
+        form input { border-style: solid; border-width:1px; padding: 10px; width: 85%; margin-right: .5%; }
+        form button {color: #eee; width: 9%; background: #01ad2c; border: solid; padding: 10px; margin-left: 2%; }
+        #messages { list-style-type: none; margin: 0; padding: 0; }
+        #messages li { padding: 15px 10px; }
+        #messages li:nth-child(odd) { background: #eee; }
+        #outer{  width: 100px;padding: 10px 24px;margin: 1em 0;text-align: center;color: white;font-weight: bold;font-size: 86%;text-shadow: 0 -.05em .1em rgba(0,0,0,.3);height: 6px;position: relative;background: #00a2bb;border-radius: 16.4em;}
+        #outer::after {position: absolute; left: 0; top: 50%; width: 0; height: 0; border: 9px solid transparent; border-right-color: #00a2bbcb; border-left: 0; margin-top: -9px; margin-left: -9px;}
+    </style>
+    <script src="../../socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  </head>
+  <body>
+    <div>
+    <h1 id="heading" style="font-family: 'Lobster', cursive;text-align: center;background-color: #00a2bbcb"></h1>
+    <ul id="messages"></ul>
+  </br>
+</div>
+</br>
+</br>
+</br>
+    <form action="/chat" method="POST" id="chatForm">
+      <input  id="txt" autocomplete="off" autofocus="on" oninput="isTyping()" placeholder="type your message here..." /><button type="submit" class="btn btn-primary" >
+          
+          Send
+        </button>
+     <h1 id="username" hidden><%=username%></h1>
+    </form>
+    <script>
+
+            var socket = io.connect('http://localhost:3020');
+            // submit text message without reload/refresh the page
+            $('form').submit(function(e){
+                e.preventDefault(); // prevents page reloading
+                socket.emit('chat_message', $('#txt').val());
+                $('#txt').val('');
+                return false;
+            });
+
+
+            // append the chat text message
+            socket.on('chat_message', function(data){
+             displayMsg(data)  ;
+                      });
+
+
+            // append text if someone is online
+            socket.on('is_online', function(username) {
+                $('#messages').append($('<li>').html(username));
+                 
+            });
+
+
+            // ask username
+            //var username = prompt('Please tell me your name');
+            var username=document.getElementById('username').innerText;
+          
+            console.log(username);
+            socket.emit('username', username);
+            // ask event
+            var event =prompt('Please tell me your event name');
+            $('#heading').html('Welcome to '+event+' event')
+
+             socket.emit('event', event);
+
+            
+
+            socket.on('load old msgs',function(docs){
+              for(var i=0;i<docs.length;i++){
+                displayMsg(docs[i]);
+              }
+
+            });
+
+            socket.on('event-error',function(errmsg){
+             
+              
+              alert(errmsg);
+              location.reload(true);
+            });
+
+            function displayMsg(data){
+              if(data.username===""){
+                $('#txt').html('go back and enter your username to post message!!');
+
+              }
+              else{
+                $('#messages').append($('<li>').html('<span  >'+'<strong>' +'&#119070;'  + data.username +'</span>'+ '</strong>: ' +'<span id="outer" style="">'+'<span id="inner" style="">'+data.msg+'</span>'+'</span>'));
+              }
+            }
+            
+            
+           
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://hackerthemes.com/bootstrap-cheatsheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/bootstrap/bootstrap_wells.asp">
+    <link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet"> 
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+ <script> function displayProfile(name){
+    axios.get('http://localhost:3020/profile')
+    .then(function (response) {
+      // handle success
+     
+      display(response,name);
+      // addProfiledata();
+      displayAudio(name)
+      displayVideo(name)
+      displayBio(name)
+
+      
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+
+    }
+function display(response,name){
+     length=response.data.length;
+      for(var i=0;i<length;i++){
+        if(response.data[i].userName===name){
+          console.log("this is user"+response.data[i].userName)
+          document.getElementById("data").innerHTML+=
+       
+       `
+       <div class="jumbotron">
+  <h3 class="display-3">THIS IS,${response.data[i].userName}</h1>
+  <p class="lead">INSTRUMENT : ${response.data[i].instrument}</p>
+  <p class="lead">GENRE:${response.data[i].genre}</p>
+  <hr class="my-2">
+  <p>EMAIL:${response.data[i].email}.</p>
+  <p>MOBILE NO:${response.data[i].phoneNumber}
+  <p>CITY:${response.data[i].city}</p>
+  <p>
+ 
+
+</div>
+`
+        }
+      }
+
+    }
+
+
+
+    function displayAudio(name){
+      axios.get('http://localhost:3020/profile/audio')
+    .then(function (response) {
+      // handle success
+      displayWidget(response,name);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+    }
+    function displayWidget(response,name){
+      length=response.data.length;
+      console.log("length is"+length);
+
+      for(var i=0;i<length;i++){
+        if(response.data[i].userName===name){
+          console.log("sound cloud links---"+response.data[i].userName)
+          url=response.data[i].audioLink;
+          axios.get('http://soundcloud.com/oembed?format=json&url='+url+'&iframe=true')
+    .then(function (response) {
+      // handle success
+    var widget=response.data.html
+    widget=widget.replace("width=\"50%\"","width=\"70%\"");
+    widget=widget.replace("height=\"400\"","height=\"70%\"");
+    document.getElementById('soundcloud').innerHTML+=widget
+     console.log(widget)
+     
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+
+
+  }}
+
+    }
+
+    function displayVideo(name){
+      axios.get('http://localhost:3020/profile/video')
+    .then(function (response) {
+      // handle success
+      displayYoutube(response,name);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+    }
+
+    function displayYoutube(response,name){
+      length=response.data.length;
+      for(var i=0;i<length;i++){
+        if(response.data[i].userName===name){
+         console.log("inside display YT"+input_string)
+            var input_string = response.data[i].videoLink;
+            console.log(input_string)
+            var right_text = input_string.substring(input_string.indexOf("=")+1);
+            console.log("YT ID"+right_text)
+            document.getElementById('frame').innerHTML+=` <iframe width="620" height="315" src="https://www.youtube.com/embed/${right_text}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+`}}}
+function displayBio(name){
+      axios.get('http://localhost:3020/profile/bio')
+    .then(function (response) {
+      // handle success
+      displayUserbio(response,name);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+}
+function displayUserbio(response,name){
+  length=response.data.length;
+      for(var i=0;i<length;i++){
+        if(response.data[i].userName===name){
+          console.log("this is userbio"+response.data[i].bio)
+
+document.getElementById('userbio').innerHTML+=`<p>${response.data[i].bio}</p>`
+
+
+}}}
+
+function getguitar()
+    {
+      axios.get('http://localhost:3020/guitar')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      displayData(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+  
+    
+    function getdrum()
+    {
+  axios.get('http://localhost:3020/drum')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      displayData(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+    function getbass()
+    {
+  axios.get('http://localhost:3020/bass')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      displayData(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+    function getvocals()
+    {
+  axios.get('http://localhost:3020/vocals')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      displayData(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+    function getkeyboard()
+    {
+  axios.get('http://localhost:3020/keyboard')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      displayData(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
+    }
+    function getevent()
+    {
+      axios.get('http://localhost:3020/event')
+    .then(function (response) {
+      // handle success
+      clearData();
+      clearProfiledata()
+      displayEventData(response);
+      console.log(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  }
+  function displayData(response)
+    {   length=response.data.length;
+      for(var i=0;i<length;i++){
+     
+     
+  document.getElementById("data").innerHTML+=
+       
+       `
+       <div class="card-deck" style="width:25% ;float:left;margin-right:0px;margin-bottom:30px ">
+      <div class="card" >
+    <img class="card-img-top" src="https://www.kickassfacts.com/wp-content/uploads/2014/06/Bands.jpg"  style="width:100%">
+      <h4 class="card-title">${response.data[i].userName}</h4>
+      <p class="card-text">Instrument:${response.data[i].instrument}</p>
+      <p class="card-text">Genre:${response.data[i].genre}</p>
+      <p class="card-text">Level:${response.data[i].level}</p>
+    
+      
+      
+      <a href='/others/${response.data[i].userName}' target='_blank' class="btn btn-primary stretched-link" id =${i} >See Profile</a>
+    </div>
+  </div>
+</div>
+</div>
+  
+      `
+      // let btn=document.getElementsByClassName('btn btn-primary stretched-link')[i];
+      //   btn.addEventListener('click',()=>{displayProfile(response.data[i].userName)})
+      // var data=document.createElement(a);
+      // node.appendChild(data);
+      // document.getElementById("data0").appendChild(node)
+     // console.log(userName);
+    
+    }}
+
+
+    function clearData(){
+     //document.getElementById('userlinks').innerHTML=""
+      document.getElementById("data").innerHTML=""
+    }
+    function clearProfiledata(){
+      document.getElementById('userlinks').innerHTML=""
+    }
+    function displayMain(loguser)
+  {
+    link='http://localhost:3020/main/'+loguser
+    console.log(link)
+    location.href=link}
+
+
+</script>
+
+<style>
+  #data{
+    width: 100%;
+    padding-right: 173px;
+    padding-left: 163px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 94px;
+    
+
+}
+  #userlinks{
+    width: 100%;
+padding-right: 169px;
+padding-left: 163px;
+margin-right: auto;
+margin-left: auto;
+padding-top: 23px;
+  }
+
+  #userbio{
+    background-image: url('https://backgrounddownload.com/wp-content/uploads/2018/09/talenan-kayu-background.jpg')
+
+  }
+  .jumbotron{
+    background-image: url('https://cdn.pixabay.com/photo/2014/05/21/15/18/musician-349790_960_720.jpg');
+    text-align: center;
+
+  }
+  body{
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOQ471oSTb0PwE8Hxrkp1QPzJW1QzFtV0GxzwnCMW2z3CKO42Z')
+  }
+  
+</style>
+
+</head>
+<body>
+       
+
+
+<h1 id="user" hidden ><%=username%></h1>
+<div class="container-fluid" id="data" >  
+   
+
+</div>
+
+   <div class="container-fluid" id='userlinks'>
+    <div id='userbio' class="shadow-lg p-3 mb-5 bg-white rounded">
+      <h2 style="margin-bottom: 5px; font-family: 'Anton', sans-serif;">DESCRIPTION</h2>
+      <br>
+    </div>
+   </div>
+   <div id='media'>
+    <p style=" padding-left: 34px;font-size: 33px; color:antiquewhite;font-family: 'Anton', sans-serif;">MY AUDIOS</p>
+    <div>
+     <p class="well well-lg"id='soundcloud' style="height:256px;width:100%;padding-left: 25px;float: left;"></p>
+    </div>
+    
+    <p style=" padding-left: 34px;font-size: 33px;position: relative;top: 135px;color:antiquewhite;font-family: 'Anton', sans-serif;padding-bottom: 76px;">MY VIDEOS</p>
+    
+    <p id="frame" style="padding-top: 84px;padding-left: 27px;"></p>
+  
+</div>
+   </div>
+
+<script>
+        var loguser=document.getElementById('user').innerText;
+window.onload=function(){
+displayProfile(loguser)
+// displayAudio(loguser)
+// displayVideo(loguser)
+// displayBio(loguser)
+}</script>
+   
+</body>
+</html>
